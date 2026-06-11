@@ -205,6 +205,46 @@
       white-space: nowrap;
     }
 
+
+    .main-tabs {
+      position: sticky;
+      top: calc(env(safe-area-inset-top) + 6px);
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 8px;
+      margin: 0 0 14px;
+      background: rgba(244, 239, 230, .86);
+      border: 1px solid rgba(229, 216, 198, .9);
+      border-radius: 18px;
+      box-shadow: 0 8px 22px rgba(31, 41, 51, .08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .main-tab-button {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbf3e8;
+      color: var(--text);
+      padding: 12px 10px;
+      font-size: 15px;
+      font-weight: 850;
+      line-height: 1.15;
+    }
+
+    .main-tab-button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .main-tab-button:active { transform: scale(.985); }
+
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
     .tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -348,7 +388,12 @@
       </div>
     </header>
 
-    <section class="card" aria-labelledby="shopping-title">
+    <nav class="main-tabs" role="tablist" aria-label="Hauptbereiche">
+      <button class="main-tab-button active" id="shopping-main-tab" type="button" data-view="shopping-view" role="tab" aria-selected="true" aria-controls="shopping-view">Einkaufsliste</button>
+      <button class="main-tab-button" id="meals-main-tab" type="button" data-view="meals-view" role="tab" aria-selected="false" aria-controls="meals-view">Tageskombinationen</button>
+    </nav>
+
+    <section class="card view-section active" id="shopping-view" aria-labelledby="shopping-title" role="tabpanel" aria-labelledby="shopping-main-tab">
       <div class="card-title-row">
         <h2 id="shopping-title">Einkaufsliste</h2>
         <button class="small-button" id="resetShopping" type="button">Zurücksetzen</button>
@@ -397,7 +442,7 @@
       </details>
     </section>
 
-    <section class="card" aria-labelledby="days-title">
+    <section class="card view-section" id="meals-view" aria-labelledby="days-title" role="tabpanel" aria-labelledby="meals-main-tab">
       <h2 id="days-title">Tageskombinationen</h2>
       <div class="tabs" role="tablist" aria-label="Tage">
         <button class="tab-button active" type="button" data-day="day1">Tag 1<br>Training</button>
@@ -487,6 +532,35 @@
       });
       updateProgress();
     });
+
+
+    const mainTabs = [...document.querySelectorAll(".main-tab-button")];
+    const views = [...document.querySelectorAll(".view-section")];
+    const mainTabsNav = document.querySelector(".main-tabs");
+
+    function activateView(target, shouldScroll = false) {
+      mainTabs.forEach(button => {
+        const isActive = button.dataset.view === target;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+      views.forEach(view => view.classList.toggle("active", view.id === target));
+      localStorage.setItem("fitness-selected-view", target);
+
+      if (shouldScroll && mainTabsNav) {
+        const navTop = mainTabsNav.getBoundingClientRect().top + window.scrollY - 6;
+        window.scrollTo({ top: Math.max(0, navTop), behavior: "smooth" });
+      }
+    }
+
+    mainTabs.forEach(button => {
+      button.addEventListener("click", () => activateView(button.dataset.view, true));
+    });
+
+    const selectedView = localStorage.getItem("fitness-selected-view");
+    if (selectedView && document.getElementById(selectedView)) {
+      activateView(selectedView, false);
+    }
 
     const tabButtons = [...document.querySelectorAll(".tab-button")];
     const mealDays = [...document.querySelectorAll(".meal-day")];
