@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fitness Einkauf & Essen</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Essen" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#f4efe6" />
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --card: #fffaf2;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --line: #e5d8c6;
+      --accent: #2f6b4f;
+      --accent-light: #e4f1e9;
+      --danger: #9f3a38;
+      --shadow: 0 10px 25px rgba(31, 41, 51, .08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f7f1e8 0%, var(--bg) 55%, #efe4d5 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: env(safe-area-inset-top) 14px calc(22px + env(safe-area-inset-bottom));
+    }
+
+    .app {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 18px 6px 12px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(28px, 8vw, 44px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0 16px;
+    }
+
+    .metric {
+      background: rgba(255, 250, 242, .7);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card {
+      background: rgba(255, 250, 242, .94);
+      border: 1px solid rgba(229, 216, 198, .8);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(12px);
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .small-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: #f0e4d4;
+      color: var(--text);
+      font-weight: 650;
+      font-size: 13px;
+    }
+
+    .small-button:active { transform: scale(.98); }
+
+    .progress {
+      height: 9px;
+      border-radius: 999px;
+      background: #eadfce;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .progress > div {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: inherit;
+      transition: width .2s ease;
+    }
+
+    .progress-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin: -4px 0 12px;
+    }
+
+    details {
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    details:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      font-weight: 750;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "⌄";
+      color: var(--muted);
+      font-size: 18px;
+      transform: translateY(-1px);
+    }
+    details[open] summary::after { transform: rotate(180deg); }
+
+    .shopping-item {
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(229, 216, 198, .55);
+    }
+
+    .shopping-item:last-child { border-bottom: 0; }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--accent);
+    }
+
+    .item-name {
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .shopping-item.checked .item-name {
+      text-decoration: line-through;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .qty {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tab-button {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbf3e8;
+      color: var(--text);
+      padding: 10px 8px;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.15;
+    }
+
+    .tab-button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .meal-day { display: none; }
+    .meal-day.active { display: block; }
+
+    .day-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .day-heading h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .badge {
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .meal {
+      border-top: 1px solid var(--line);
+      padding: 13px 0;
+    }
+
+    .meal:first-of-type { border-top: 0; }
+
+    .meal-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: .08em;
+      font-weight: 850;
+      margin-bottom: 5px;
+    }
+
+    .meal-main {
+      font-size: 16px;
+      font-weight: 750;
+      margin-bottom: 5px;
+    }
+
+    .meal-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .hint {
+      background: #fff4d7;
+      border: 1px solid #ead48d;
+      border-radius: 14px;
+      padding: 11px 12px;
+      color: #664d03;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 12px;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      padding: 10px 0 0;
+    }
+
+    @media (max-width: 420px) {
+      body { padding-left: 10px; padding-right: 10px; }
+      .summary { grid-template-columns: 1fr; }
+      .tabs { grid-template-columns: repeat(2, 1fr); }
+      .shopping-item { grid-template-columns: 30px 1fr; }
+      .qty { grid-column: 2; text-align: left; margin-top: -3px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Fitness Essen</h1>
+      <p class="subtitle">Einfache Einkaufsliste + schnelle Tageskombinationen für Fettabbau, Muskelaufbau und mehr Cardio.</p>
+      <div class="summary">
+        <div class="metric"><strong>150–170 g</strong><span>Protein pro Tag</span></div>
+        <div class="metric"><strong>2.000–2.300</strong><span>kcal als grober Startpunkt</span></div>
+      </div>
+    </header>
+
+    <section class="card" aria-labelledby="shopping-title">
+      <div class="card-title-row">
+        <h2 id="shopping-title">Einkaufsliste</h2>
+        <button class="small-button" id="resetShopping" type="button">Zurücksetzen</button>
+      </div>
+      <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+      <p class="progress-label" id="progressLabel">0 erledigt</p>
+
+      <details open>
+        <summary>Protein</summary>
+        <label class="shopping-item"><input type="checkbox" data-key="skyr"><span class="item-name">Skyr oder Magerquark</span><span class="qty">2–3 kg</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="eggs"><span class="item-name">Eier</span><span class="qty">10 Stück</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="chicken"><span class="item-name">Hähnchen- oder Putenbrust</span><span class="qty">1–1,2 kg</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="tuna"><span class="item-name">Thunfisch im eigenen Saft</span><span class="qty">3–4 Dosen</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="cottage"><span class="item-name">Hüttenkäse / körniger Frischkäse</span><span class="qty">2 Becher</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="milk"><span class="item-name">Milch</span><span class="qty">1–2 Liter</span></label>
+      </details>
+
+      <details open>
+        <summary>Kohlenhydrate</summary>
+        <label class="shopping-item"><input type="checkbox" data-key="oats"><span class="item-name">Haferflocken</span><span class="qty">1 Packung</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="bread"><span class="item-name">Vollkornbrot</span><span class="qty">1 Packung/Laib</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="wraps"><span class="item-name">Vollkorn-Wraps</span><span class="qty">1 Packung</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="potatoes"><span class="item-name">Kartoffeln</span><span class="qty">2 kg</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="rice"><span class="item-name">Reis oder Mikrowellenreis</span><span class="qty">3–5 Portionen</span></label>
+      </details>
+
+      <details open>
+        <summary>Gemüse & Obst</summary>
+        <label class="shopping-item"><input type="checkbox" data-key="frozenveg"><span class="item-name">TK-Gemüse</span><span class="qty">2–3 Packungen</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="salad"><span class="item-name">Salatmix</span><span class="qty">2 Packungen</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="cucumber"><span class="item-name">Gurke</span><span class="qty">1–2 Stück</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="tomatoes"><span class="item-name">Tomaten</span><span class="qty">500 g–1 kg</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="paprika"><span class="item-name">Paprika</span><span class="qty">3 Stück</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="bananas"><span class="item-name">Bananen</span><span class="qty">5 Stück</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="berries"><span class="item-name">TK-Beeren oder Äpfel</span><span class="qty">1 Packung / 5 Stück</span></label>
+      </details>
+
+      <details>
+        <summary>Geschmack & Basics</summary>
+        <label class="shopping-item"><input type="checkbox" data-key="mustard"><span class="item-name">Senf</span><span class="qty">1 Glas/Tube</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="tomatopassata"><span class="item-name">Passierte Tomaten</span><span class="qty">1–2 Packungen</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="spices"><span class="item-name">Salz, Pfeffer, Paprika, Curry, Knoblauchpulver</span><span class="qty">nach Bedarf</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="oil"><span class="item-name">Raps- oder Olivenöl</span><span class="qty">1 Flasche</span></label>
+        <label class="shopping-item"><input type="checkbox" data-key="vinegar"><span class="item-name">Essig</span><span class="qty">1 Flasche</span></label>
+      </details>
+    </section>
+
+    <section class="card" aria-labelledby="days-title">
+      <h2 id="days-title">Tageskombinationen</h2>
+      <div class="tabs" role="tablist" aria-label="Tage">
+        <button class="tab-button active" type="button" data-day="day1">Tag 1<br>Training</button>
+        <button class="tab-button" type="button" data-day="day2">Tag 2<br>Stress</button>
+        <button class="tab-button" type="button" data-day="day3">Tag 3<br>Cardio</button>
+        <button class="tab-button" type="button" data-day="day4">Tag 4<br>Ruhe</button>
+        <button class="tab-button" type="button" data-day="day5">Tag 5<br>Deutsch</button>
+      </div>
+
+      <article class="meal-day active" id="day1">
+        <div class="day-heading"><h3>Trainingstag</h3><span class="badge">mehr Carbs</span></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Trinkbarer Skyr-Shake</div><div class="meal-desc">Skyr/Magerquark + Milch + Banane + Haferflocken. Dünn mixen, nicht als dicke Bowl essen.</div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Hähnchen-Bowl</div><div class="meal-desc">Reis oder Kartoffeln + Hähnchen + TK-Gemüse + Quark-Senf-Dip.</div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Hüttenkäse + Brot oder Banane</div><div class="meal-desc">Einfacher Proteinanker zwischen Arbeit und Training.</div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Eier + Vollkornbrot + Gemüse</div><div class="meal-desc">3 Eier oder 2 Eier + Hüttenkäse, dazu Gurke/Tomate/Paprika.</div></div>
+      </article>
+
+      <article class="meal-day" id="day2">
+        <div class="day-heading"><h3>Keine-Zeit-Tag</h3><span class="badge">wenig Kochen</span></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Brot-Frühstück</div><div class="meal-desc">Vollkornbrot + Hüttenkäse + Putenbrust oder Eier + Tomaten/Gurke.</div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Thunfisch-Wraps</div><div class="meal-desc">Wraps + Thunfisch + Salatmix + Gurke/Tomate + Quark-Senf-Dip.</div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Skyr-Drink selbstgemacht</div><div class="meal-desc">Skyr + viel Milch + Banane. Bei Bedarf Haferflocken weglassen.</div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Kartoffeln + Quark</div><div class="meal-desc">Kartoffeln kochen, Quark mit Milch/Senf/Gewürzen dünn rühren, Gemüse dazu.</div></div>
+      </article>
+
+      <article class="meal-day" id="day3">
+        <div class="day-heading"><h3>Cardio + Kraft</h3><span class="badge">Energie</span></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Porridge + Protein separat</div><div class="meal-desc">Haferflocken mit Milch warm machen. Skyr/Quark daneben stark verdünnen oder als Shake.</div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Hähnchen-Kartoffel-Teller</div><div class="meal-desc">Kartoffeln + Hähnchen + TK-Gemüse + passierte Tomaten als schnelle Sauce.</div></div>
+        <div class="meal"><div class="meal-title">Vor/Nach Training</div><div class="meal-main">Banane + Milch/Skyr-Shake</div><div class="meal-desc">Leicht verdaulich, praktisch, kein Kochen.</div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Wrap mit Hähnchenresten</div><div class="meal-desc">Reste vom Mittag in Wraps packen, Salat dazu.</div></div>
+      </article>
+
+      <article class="meal-day" id="day4">
+        <div class="day-heading"><h3>Ruhetag / Home Office</h3><span class="badge">sättigend</span></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Eierbrot</div><div class="meal-desc">2–3 Eier + Vollkornbrot + Gurke/Tomate.</div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Großer Hähnchen-Salat</div><div class="meal-desc">Salatmix + Hähnchen + Hüttenkäse + Essig/Öl/Senf-Dressing.</div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Hüttenkäse oder Skyr</div><div class="meal-desc">Mit Obst, oder herzhaft mit Pfeffer und Gurke.</div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Omelett mit TK-Gemüse</div><div class="meal-desc">Eier + TK-Gemüse + etwas Hüttenkäse. Wenig Aufwand, sehr sättigend.</div></div>
+      </article>
+
+      <article class="meal-day" id="day5">
+        <div class="day-heading"><h3>Simpel & deutsch</h3><span class="badge">alltagstauglich</span></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Vollkornbrot-Teller</div><div class="meal-desc">Brot + Hüttenkäse + Putenbrust/Ei + Tomaten.</div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Kartoffeln, Quark, Eier</div><div class="meal-desc">Kartoffeln + dünn gerührter Kräuterquark + 2 Eier + Gurke.</div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Banane oder Apfel + Skyr</div><div class="meal-desc">Skyr mit Milch verrühren, damit er nicht so dick ist.</div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Thunfischbrot oder Wrap</div><div class="meal-desc">Thunfisch + Brot/Wrap + Salat/Gurke/Tomate + Senf-Quark-Dip.</div></div>
+      </article>
+
+      <div class="hint">Tipp: Wenn Skyr/Quark zu dick ist, immer mit Milch glatt rühren oder mixen. Die Haferflocken müssen nicht in dieselbe Schüssel.</div>
+    </section>
+
+    <footer>Checkboxen werden nur auf diesem Gerät im Browser gespeichert.</footer>
+  </main>
+
+  <script>
+    const STORAGE_PREFIX = "fitness-shopping-v1:";
+    const inputs = [...document.querySelectorAll('input[type="checkbox"][data-key]')];
+    const progressBar = document.getElementById("progressBar");
+    const progressLabel = document.getElementById("progressLabel");
+
+    function updateProgress() {
+      const checked = inputs.filter(input => input.checked).length;
+      const total = inputs.length;
+      const percentage = total ? Math.round((checked / total) * 100) : 0;
+      progressBar.style.width = percentage + "%";
+      progressLabel.textContent = `${checked} von ${total} erledigt (${percentage}%)`;
+
+      inputs.forEach(input => {
+        input.closest(".shopping-item").classList.toggle("checked", input.checked);
+      });
+    }
+
+    inputs.forEach(input => {
+      const saved = localStorage.getItem(STORAGE_PREFIX + input.dataset.key);
+      input.checked = saved === "true";
+      input.addEventListener("change", () => {
+        localStorage.setItem(STORAGE_PREFIX + input.dataset.key, input.checked ? "true" : "false");
+        updateProgress();
+      });
+    });
+
+    document.getElementById("resetShopping").addEventListener("click", () => {
+      inputs.forEach(input => {
+        input.checked = false;
+        localStorage.removeItem(STORAGE_PREFIX + input.dataset.key);
+      });
+      updateProgress();
+    });
+
+    const tabButtons = [...document.querySelectorAll(".tab-button")];
+    const mealDays = [...document.querySelectorAll(".meal-day")];
+
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.day;
+        tabButtons.forEach(btn => btn.classList.toggle("active", btn === button));
+        mealDays.forEach(day => day.classList.toggle("active", day.id === target));
+        localStorage.setItem("fitness-selected-day", target);
+      });
+    });
+
+    const selectedDay = localStorage.getItem("fitness-selected-day");
+    if (selectedDay && document.getElementById(selectedDay)) {
+      document.querySelector(`.tab-button[data-day="${selectedDay}"]`).click();
+    }
+
+    updateProgress();
+  </script>
+</body>
+</html>
