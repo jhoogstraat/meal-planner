@@ -284,6 +284,32 @@
       line-height: 1.42;
     }
 
+    .meal-ingredients {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 9px;
+    }
+
+    .ingredient {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(229, 216, 198, .9);
+      border-radius: 999px;
+      background: #f8efe2;
+      padding: 5px 8px;
+      font-size: 13px;
+      font-weight: 650;
+      color: #3f4a3f;
+      white-space: nowrap;
+    }
+
+    .ingredient small {
+      color: var(--muted);
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
     .hint {
       background: #fff4d7;
       border: 1px solid #ead48d;
@@ -329,6 +355,7 @@
       </div>
       <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
       <p class="progress-label" id="progressLabel">0 erledigt</p>
+      <p class="progress-label">Mengen sind grob für ca. 5 Tage gerechnet. Die Mengen in den Tabs sind Richtwerte pro Mahlzeit.</p>
 
       <details open>
         <summary>Protein</summary>
@@ -382,42 +409,42 @@
 
       <article class="meal-day active" id="day1">
         <div class="day-heading"><h3>Trainingstag</h3><span class="badge">mehr Carbs</span></div>
-        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Trinkbarer Skyr-Shake</div><div class="meal-desc">Skyr/Magerquark + Milch + Banane + Haferflocken. Dünn mixen, nicht als dicke Bowl essen.</div></div>
-        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Hähnchen-Bowl</div><div class="meal-desc">Reis oder Kartoffeln + Hähnchen + TK-Gemüse + Quark-Senf-Dip.</div></div>
-        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Hüttenkäse + Brot oder Banane</div><div class="meal-desc">Einfacher Proteinanker zwischen Arbeit und Training.</div></div>
-        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Eier + Vollkornbrot + Gemüse</div><div class="meal-desc">3 Eier oder 2 Eier + Hüttenkäse, dazu Gurke/Tomate/Paprika.</div></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Trinkbarer Skyr-Shake</div><div class="meal-desc">Dünn mixen, nicht als dicke Bowl essen.</div><div class="meal-ingredients"><span class="ingredient">Skyr/Quark <small>250 g</small></span><span class="ingredient">Milch <small>250–400 ml</small></span><span class="ingredient">Banane <small>1 Stück</small></span><span class="ingredient">Haferflocken <small>30–50 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Hähnchen-Bowl</div><div class="meal-desc">Schnelle Bowl für Krafttrainingstage.</div><div class="meal-ingredients"><span class="ingredient">Hähnchen/Pute <small>200–250 g</small></span><span class="ingredient">Reis <small>1 Portion</small></span><span class="ingredient">oder Kartoffeln <small>300–400 g</small></span><span class="ingredient">TK-Gemüse <small>250–300 g</small></span><span class="ingredient">Quark-Dip <small>150–250 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Hüttenkäse + Brot oder Banane</div><div class="meal-desc">Einfacher Proteinanker zwischen Arbeit und Training.</div><div class="meal-ingredients"><span class="ingredient">Hüttenkäse <small>200 g</small></span><span class="ingredient">Vollkornbrot <small>1–2 Scheiben</small></span><span class="ingredient">oder Banane <small>1 Stück</small></span></div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Eier + Vollkornbrot + Gemüse</div><div class="meal-desc">Sättigend, schnell und ohne großes Kochen.</div><div class="meal-ingredients"><span class="ingredient">Eier <small>2–3 Stück</small></span><span class="ingredient">Hüttenkäse optional <small>100–150 g</small></span><span class="ingredient">Vollkornbrot <small>2 Scheiben</small></span><span class="ingredient">Gemüse <small>200–300 g</small></span></div></div>
       </article>
 
       <article class="meal-day" id="day2">
         <div class="day-heading"><h3>Keine-Zeit-Tag</h3><span class="badge">wenig Kochen</span></div>
-        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Brot-Frühstück</div><div class="meal-desc">Vollkornbrot + Hüttenkäse + Putenbrust oder Eier + Tomaten/Gurke.</div></div>
-        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Thunfisch-Wraps</div><div class="meal-desc">Wraps + Thunfisch + Salatmix + Gurke/Tomate + Quark-Senf-Dip.</div></div>
-        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Skyr-Drink selbstgemacht</div><div class="meal-desc">Skyr + viel Milch + Banane. Bei Bedarf Haferflocken weglassen.</div></div>
-        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Kartoffeln + Quark</div><div class="meal-desc">Kartoffeln kochen, Quark mit Milch/Senf/Gewürzen dünn rühren, Gemüse dazu.</div></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Brot-Frühstück</div><div class="meal-desc">Herzhaft und deutlich angenehmer als dicke Quark-Haferflocken.</div><div class="meal-ingredients"><span class="ingredient">Vollkornbrot <small>2–3 Scheiben</small></span><span class="ingredient">Hüttenkäse <small>150–200 g</small></span><span class="ingredient">Putenbrust <small>100–150 g</small></span><span class="ingredient">oder Eier <small>2 Stück</small></span><span class="ingredient">Gemüse <small>150–250 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Thunfisch-Wraps</div><div class="meal-desc">Ohne Kochen, nur zusammenbauen.</div><div class="meal-ingredients"><span class="ingredient">Wraps <small>2 Stück</small></span><span class="ingredient">Thunfisch <small>1 Dose</small></span><span class="ingredient">Salatmix <small>1–2 Handvoll</small></span><span class="ingredient">Gurke/Tomate <small>150–250 g</small></span><span class="ingredient">Quark-Dip <small>100–150 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Skyr-Drink selbstgemacht</div><div class="meal-desc">Bei Bedarf Haferflocken weglassen, damit er trinkbar bleibt.</div><div class="meal-ingredients"><span class="ingredient">Skyr/Quark <small>250 g</small></span><span class="ingredient">Milch <small>300–400 ml</small></span><span class="ingredient">Banane <small>1 Stück</small></span><span class="ingredient">Haferflocken optional <small>20–30 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Kartoffeln + Quark</div><div class="meal-desc">Quark mit Milch, Senf und Gewürzen dünn rühren.</div><div class="meal-ingredients"><span class="ingredient">Kartoffeln <small>400–500 g</small></span><span class="ingredient">Quark/Skyr <small>250–300 g</small></span><span class="ingredient">Milch <small>50–150 ml</small></span><span class="ingredient">Gurke/Tomate <small>200 g</small></span><span class="ingredient">Senf/Gewürze <small>nach Bedarf</small></span></div></div>
       </article>
 
       <article class="meal-day" id="day3">
         <div class="day-heading"><h3>Cardio + Kraft</h3><span class="badge">Energie</span></div>
-        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Porridge + Protein separat</div><div class="meal-desc">Haferflocken mit Milch warm machen. Skyr/Quark daneben stark verdünnen oder als Shake.</div></div>
-        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Hähnchen-Kartoffel-Teller</div><div class="meal-desc">Kartoffeln + Hähnchen + TK-Gemüse + passierte Tomaten als schnelle Sauce.</div></div>
-        <div class="meal"><div class="meal-title">Vor/Nach Training</div><div class="meal-main">Banane + Milch/Skyr-Shake</div><div class="meal-desc">Leicht verdaulich, praktisch, kein Kochen.</div></div>
-        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Wrap mit Hähnchenresten</div><div class="meal-desc">Reste vom Mittag in Wraps packen, Salat dazu.</div></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Porridge + Protein separat</div><div class="meal-desc">Haferflocken warm machen, Protein separat dünn anrühren.</div><div class="meal-ingredients"><span class="ingredient">Haferflocken <small>50–70 g</small></span><span class="ingredient">Milch <small>250–350 ml</small></span><span class="ingredient">Banane/Beeren <small>1 Stück/150 g</small></span><span class="ingredient">Skyr/Quark <small>250 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Hähnchen-Kartoffel-Teller</div><div class="meal-desc">Mehr Energie für Tage mit Cardio und Krafttraining.</div><div class="meal-ingredients"><span class="ingredient">Hähnchen/Pute <small>200–250 g</small></span><span class="ingredient">Kartoffeln <small>400–500 g</small></span><span class="ingredient">TK-Gemüse <small>250–300 g</small></span><span class="ingredient">passierte Tomaten <small>150–250 ml</small></span></div></div>
+        <div class="meal"><div class="meal-title">Vor/Nach Training</div><div class="meal-main">Banane + Milch/Skyr-Shake</div><div class="meal-desc">Leicht verdaulich, praktisch, kein Kochen.</div><div class="meal-ingredients"><span class="ingredient">Banane <small>1 Stück</small></span><span class="ingredient">Skyr/Quark <small>200–250 g</small></span><span class="ingredient">Milch <small>250–400 ml</small></span></div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Wrap mit Hähnchenresten</div><div class="meal-desc">Reste vom Mittag in Wraps packen, Salat dazu.</div><div class="meal-ingredients"><span class="ingredient">Wraps <small>1–2 Stück</small></span><span class="ingredient">Hähnchenreste <small>150–200 g</small></span><span class="ingredient">Salatmix <small>1–2 Handvoll</small></span><span class="ingredient">Quark-Dip <small>100–150 g</small></span></div></div>
       </article>
 
       <article class="meal-day" id="day4">
         <div class="day-heading"><h3>Ruhetag / Home Office</h3><span class="badge">sättigend</span></div>
-        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Eierbrot</div><div class="meal-desc">2–3 Eier + Vollkornbrot + Gurke/Tomate.</div></div>
-        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Großer Hähnchen-Salat</div><div class="meal-desc">Salatmix + Hähnchen + Hüttenkäse + Essig/Öl/Senf-Dressing.</div></div>
-        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Hüttenkäse oder Skyr</div><div class="meal-desc">Mit Obst, oder herzhaft mit Pfeffer und Gurke.</div></div>
-        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Omelett mit TK-Gemüse</div><div class="meal-desc">Eier + TK-Gemüse + etwas Hüttenkäse. Wenig Aufwand, sehr sättigend.</div></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Eierbrot</div><div class="meal-desc">Sättigend und simpel für ruhige Home-Office-Tage.</div><div class="meal-ingredients"><span class="ingredient">Eier <small>2–3 Stück</small></span><span class="ingredient">Vollkornbrot <small>2 Scheiben</small></span><span class="ingredient">Gurke/Tomate <small>200 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Großer Hähnchen-Salat</div><div class="meal-desc">Viel Volumen, viel Protein, eher weniger Carbs.</div><div class="meal-ingredients"><span class="ingredient">Salatmix <small>1 Packung</small></span><span class="ingredient">Hähnchen/Pute <small>200–250 g</small></span><span class="ingredient">Hüttenkäse <small>150–200 g</small></span><span class="ingredient">Gurke/Tomate <small>200 g</small></span><span class="ingredient">Dressing <small>1–2 EL</small></span></div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Hüttenkäse oder Skyr</div><div class="meal-desc">Mit Obst süß oder mit Pfeffer und Gurke herzhaft.</div><div class="meal-ingredients"><span class="ingredient">Hüttenkäse/Skyr <small>200–250 g</small></span><span class="ingredient">Obst <small>1 Stück</small></span><span class="ingredient">oder Gurke <small>100–150 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Omelett mit TK-Gemüse</div><div class="meal-desc">Wenig Aufwand, sehr sättigend.</div><div class="meal-ingredients"><span class="ingredient">Eier <small>2–3 Stück</small></span><span class="ingredient">TK-Gemüse <small>250–300 g</small></span><span class="ingredient">Hüttenkäse <small>100–150 g</small></span><span class="ingredient">Öl <small>1 TL</small></span></div></div>
       </article>
 
       <article class="meal-day" id="day5">
         <div class="day-heading"><h3>Simpel & deutsch</h3><span class="badge">alltagstauglich</span></div>
-        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Vollkornbrot-Teller</div><div class="meal-desc">Brot + Hüttenkäse + Putenbrust/Ei + Tomaten.</div></div>
-        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Kartoffeln, Quark, Eier</div><div class="meal-desc">Kartoffeln + dünn gerührter Kräuterquark + 2 Eier + Gurke.</div></div>
-        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Banane oder Apfel + Skyr</div><div class="meal-desc">Skyr mit Milch verrühren, damit er nicht so dick ist.</div></div>
-        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Thunfischbrot oder Wrap</div><div class="meal-desc">Thunfisch + Brot/Wrap + Salat/Gurke/Tomate + Senf-Quark-Dip.</div></div>
+        <div class="meal"><div class="meal-title">Frühstück</div><div class="meal-main">Vollkornbrot-Teller</div><div class="meal-desc">Klassisch, schnell und gut vorzubereiten.</div><div class="meal-ingredients"><span class="ingredient">Vollkornbrot <small>2–3 Scheiben</small></span><span class="ingredient">Hüttenkäse <small>150–200 g</small></span><span class="ingredient">Putenbrust <small>100 g</small></span><span class="ingredient">oder Ei <small>1–2 Stück</small></span><span class="ingredient">Tomaten <small>150–200 g</small></span></div></div>
+        <div class="meal"><div class="meal-title">Mittag</div><div class="meal-main">Kartoffeln, Quark, Eier</div><div class="meal-desc">Sehr sättigend und günstig.</div><div class="meal-ingredients"><span class="ingredient">Kartoffeln <small>400–500 g</small></span><span class="ingredient">Quark/Skyr <small>250–300 g</small></span><span class="ingredient">Eier <small>2 Stück</small></span><span class="ingredient">Gurke <small>150–200 g</small></span><span class="ingredient">Milch/Senf/Gewürze <small>nach Bedarf</small></span></div></div>
+        <div class="meal"><div class="meal-title">Snack</div><div class="meal-main">Banane oder Apfel + Skyr</div><div class="meal-desc">Skyr mit Milch verrühren, damit er nicht so dick ist.</div><div class="meal-ingredients"><span class="ingredient">Skyr/Quark <small>200–250 g</small></span><span class="ingredient">Milch <small>100–200 ml</small></span><span class="ingredient">Banane/Apfel <small>1 Stück</small></span></div></div>
+        <div class="meal"><div class="meal-title">Abendessen</div><div class="meal-main">Thunfischbrot oder Wrap</div><div class="meal-desc">Als Brot-Teller oder schneller Wrap.</div><div class="meal-ingredients"><span class="ingredient">Thunfisch <small>1 Dose</small></span><span class="ingredient">Brot <small>2 Scheiben</small></span><span class="ingredient">oder Wrap <small>1–2 Stück</small></span><span class="ingredient">Salat/Gemüse <small>200–300 g</small></span><span class="ingredient">Quark-Dip <small>100–150 g</small></span></div></div>
       </article>
 
       <div class="hint">Tipp: Wenn Skyr/Quark zu dick ist, immer mit Milch glatt rühren oder mixen. Die Haferflocken müssen nicht in dieselbe Schüssel.</div>
